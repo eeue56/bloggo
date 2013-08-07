@@ -4,12 +4,38 @@
 <header class="hero-unit" style="background-color:#A9F16C">
   <div class="container">
     <div class="row">
+      <h1>{{.latest.Title}}</h1>
       <div class="hero-text">
-        <h1>It works!</h1>
-        <p></p>
+        <h2>{{.latest.Content}}</h2>
+        <p>It was made at {{.latest.Time}} </br>
+           <span class="bold white">
+              {{if not .logged_in}}
+                <h3 class="form-title">Login to SkuStock</h3>
+                <form action="/Login" method="post">
+                    <div class="error">
+                        {{index .errors "count"}}
+                        {{index .errors "user.Email"}}
+                        {{index .errors "user.Password"}}
+                    </div>
+                    <label>Email</label>
+                    <input class="form-field" type='text' id='email' name='user.Email' placeholder="someone@address.com"/></input>
+                    <label>Password</label>
+                    <input class="form-field" type='password' id='password' name='user.Password' placeholder="password"></input>
+                    <input id="submit" class="submit-button" type='submit' name='submit' value="Log In"></input>
+                </form>
+                </div>
+              {{else}}
+                <h3 class="form-title">Login to SkuStock</h3>
+                <form action="/Logout" method="post">
+                    <input id="submit" class="submit-button" type='submit' name='submit' value="Log out"></input>
+                </form>
+                </div>
+              {{end}}
+            </span></p>
       </div>
     </div>
-  </div>
+
+  
 </header>
 
 <div class="container">
