@@ -5,15 +5,21 @@
 module:testrunner
 
 POST    /Login                                  App.Login
-POST    /Logout                                  App.Logout
+POST    /Logout                                 App.Logout
+POST    /Create                                 App.Create
+POST    /NextPost/:id                           App.NextPost
+POST    /PreviousPost/:id                       App.PreviousPost
 
 GET     /                                       App.Index
+GET     /Write                                  App.Write
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
 
 # Map static resources from the /app/public folder to the /public path
 GET     /public/*filepath                       Static.Serve("public")
+GET     /js/*filepath                           Static.Serve("public")
+GET     /css/*filepath                          Static.Serve("public")
 
 # Catch all
 *       /:controller/:action                    :controller.:action

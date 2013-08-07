@@ -3,10 +3,39 @@ package controllers
 import (
     "github.com/robfig/revel"
     "bloggo/app/models"
+    "fmt"
+    "encoding/json"
 )
 
 type App struct {
 	*revel.Controller
+}
+
+func (c App) Create() revel.Result {
+    var post models.BlogPost
+
+    for k, _ := range c.Params.Values {
+        json.Unmarshal([]byte(k), &post)
+        break
+    }
+    fmt.Println("here")
+    fmt.Println(post.Title)
+    fmt.Println(post.Content)
+
+    return c.Redirect("/")
+}
+
+func (c App) NextPost(id int) revel.Result {
+    c.RenderArgs(models.GetLatestPost());
+}
+
+func (c App) PreviousPost(id int) revel.Result {
+    c.RenderArgs(models.GetLatestPost());
+}
+
+func (c App) Write() revel.Result {
+
+    return c.Render()
 }
 
 func (c App) Login(user *models.User) revel.Result {
