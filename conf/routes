@@ -4,6 +4,9 @@
 
 module:testrunner
 
+POST    /Login                                  App.Login
+POST    /Logout                                  App.Logout
+
 GET     /                                       App.Index
 
 # Ignore favicon requests
