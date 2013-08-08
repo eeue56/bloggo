@@ -3,7 +3,6 @@ package controllers
 import (
     "github.com/robfig/revel"
     "bloggo/app/models"
-    "fmt"
     "encoding/json"
 )
 
@@ -18,19 +17,20 @@ func (c App) Create() revel.Result {
         json.Unmarshal([]byte(k), &post)
         break
     }
-    fmt.Println("here")
-    fmt.Println(post.Title)
-    fmt.Println(post.Content)
+
+    post.SavePost()
 
     return c.Redirect("/")
 }
 
 func (c App) NextPost(id int) revel.Result {
-    c.RenderArgs(models.GetLatestPost());
+    models.Connect();
+    return c.RenderJson(models.GetLatestPost());
 }
 
 func (c App) PreviousPost(id int) revel.Result {
-    c.RenderArgs(models.GetLatestPost());
+    models.Connect();
+    return c.RenderJson(models.GetLatestPost());
 }
 
 func (c App) Write() revel.Result {
@@ -59,6 +59,7 @@ func (c App) Logout() revel.Result {
 }
 
 func (c App) Index() revel.Result {
+    models.Connect();
     c.RenderArgs["latest"] = models.GetLatestPost();
     c.RenderArgs["logged_in"] = c.Session["logged_in"]
 	return c.Render()
