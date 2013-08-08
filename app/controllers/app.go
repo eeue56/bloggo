@@ -4,6 +4,7 @@ import (
     "github.com/robfig/revel"
     "bloggo/app/models"
     "encoding/json"
+    "time"
 )
 
 type App struct {
@@ -17,7 +18,7 @@ func (c App) Create() revel.Result {
         json.Unmarshal([]byte(k), &post)
         break
     }
-
+    post.Time = int64(time.Now().Unix())
     post.SavePost()
 
     return c.Redirect("/")
@@ -34,7 +35,6 @@ func (c App) PreviousPost(id int) revel.Result {
 }
 
 func (c App) Write() revel.Result {
-
     return c.Render()
 }
 

@@ -23,11 +23,9 @@ func (post *BlogPost) SavePost() {
     client.Incr("global:id")
     id, err := client.Get("global:id")
 
-
-    post.Time = 0
-
     if err != nil {
         id = "1"
+        client.Set("global:id", 0)
     }
 
     //convert id to key
@@ -37,7 +35,7 @@ func (post *BlogPost) SavePost() {
         //Store post with key
         client.HMSet(key, "title", post.Title, "content", post.Content, "time", post.Time)
     } else {
-        client.Command("time", &post.Time);
+        post.Time = -1
         client.HMSet(key, "title", post.Title, "content", post.Content, "time", post.Time)
     }    
 }
