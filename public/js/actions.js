@@ -2,7 +2,7 @@ $(document).ready(function() {
 	live();
 });
 
-$(document).onkeydown(function(e){
+$(document).keydown(function(e){
 	if(e.keyCode == 39) {
 		nextPost();
 	} else if(e.keyCode == 37) {

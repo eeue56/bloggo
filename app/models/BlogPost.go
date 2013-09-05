@@ -9,6 +9,7 @@ type BlogPost struct {
     Content string
     Title string
     Time int64
+    Id int64
 }
 
 var client *redis.Client
@@ -54,6 +55,7 @@ func GetPost(global_id int64) (BlogPost){
     post := BlogPost{}
 
     //Construct Key
+    post.Id = global_id
     key := "post:" + strconv.FormatInt(global_id, 10)
 
     title, err := client.HMGet(key, "title")
@@ -69,6 +71,7 @@ func GetPost(global_id int64) (BlogPost){
     post.Title = title[0]
     post.Content = content[0]
     post.Time, _ = strconv.ParseInt(time[0], 10, 64)
+    post.Id = global_id
     return post
 }
 
